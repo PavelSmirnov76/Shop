@@ -1,0 +1,14 @@
+﻿@model Shop.Models.Product
+
+<div>
+    <h2>
+        Название игры: @Model.Name
+    </h2>
+    <p>Цена: @Model.Price Р</p>
+    @{
+        foreach (var pi in Model.ProductInfos)
+        {
+            <p>@pi.Hedder: @pi.Description</p>
+        }
+    }
+</div>
