@@ -28,8 +28,19 @@
                     <a asp-controller="AdminPanel" asp-action="List" type="button" class="btn btn-primary">Админ панель</a>
                 }
             }
-            <a asp-controller="Account" asp-action="Login" type="button" class="btn btn-primary">Войти</a>
-            <a asp-controller="Account" asp-action="Logout" type="button" class="btn btn-primary">Выйти</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p>@User.Identity.Name</p>
+
+                <form method="post" asp-controller="Account" asp-action="Logout" type="button" class="btn btn-primary">
+                    <input type="submit" value="Выход" />
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" type="button" class="btn btn-primary">Вход</a>
+                <a asp-controller="Account" asp-action="Register" type="button" class="btn btn-primary">Регистрация</a>
+            }
             
         </div>
     </header>

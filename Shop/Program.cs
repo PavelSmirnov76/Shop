@@ -1,11 +1,17 @@
 using GameStore.Database;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shop.Database;
+using Shop.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc(option => option.EnableEndpointRouting = false);
 builder.Services.AddDbContext<GameStoreContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+
+builder.Services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<GameStoreContext>();
 //builder.Services.AddDbContext<GameStoreContext>(options => options.UseInMemoryDatabase(databaseName: "shop"));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

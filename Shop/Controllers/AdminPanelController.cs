@@ -15,19 +15,6 @@ namespace Shop.Controllers
         public AdminPanelController(GameStoreContext context)
         {
             _context = context;
-
-            if (!_context.Users.Any())
-            {
-                var user = new User
-                {
-                    Email = "admin@admin.ru",
-                    Password = "admin",
-                    Role = "admin",
-                    Basket = new Basket()
-                };
-
-                _context.Users.Add(user);
-            }
         }
 
         public ViewResult List()

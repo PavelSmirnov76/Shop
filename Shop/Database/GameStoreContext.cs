@@ -1,17 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Shop.Models;
 
 namespace GameStore.Database
 {
-    public class GameStoreContext : DbContext
+    public class GameStoreContext : IdentityDbContext<User>
     {
         public GameStoreContext(DbContextOptions<GameStoreContext> options)
             : base(options)
         {
             Database.EnsureCreated();             
         }
-
-        public DbSet<User> Users => Set<User>();
         public DbSet<Product> Products => Set<Product>();
         public DbSet<ProductInfo> ProductInfos => Set<ProductInfo>();
         public DbSet<BasketProduct> BasketProducts => Set<BasketProduct>();
@@ -19,6 +18,8 @@ namespace GameStore.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Product>(p =>
             {
                 p

@@ -1,30 +1,23 @@
 ﻿@model Shop.ViewModels.RegisterModel
-
-<div>
-    <h2>Регистрация</h2>
-
-    <form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
-        <h1 class="h3 mb-3 fw-normal">Пожалуйста, зарегестрируйтесь</h1>
-        <div class="validation" asp-validation-summary="ModelOnly"></div>
-        <div>
-            <div>
-                <label asp-for="Email">Введите Email</label><br />
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="Email" />
-                <span asp-validation-for="Email" />
-            </div>
-            <div>
-                <label asp-for="Password">Введите пароль</label><br />
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" asp-for="Password" />
-                <span asp-validation-for="Password" />
-            </div>
-            <div>
-                <label asp-for="ConfirmPassword">Повторите пароль</label><br />
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" asp-for="ConfirmPassword" />
-                <span asp-validation-for="ConfirmPassword" />
-            </div>
-            <div>
-                <input type="submit" value="Регистрация" />
-            </div>
-        </div>
-    </form>
-</div>
+<h2>Регистрация нового пользователя</h2>
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <label asp-for="ConfirmPassword"></label><br />
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+    <div>
+        <input type="submit" value="Регистрация" />
+    </div>
+</form>

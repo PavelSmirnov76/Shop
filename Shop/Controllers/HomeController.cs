@@ -12,21 +12,6 @@ namespace Shop.Controllers
         public HomeController(GameStoreContext context)
         {
             _context = context;
-
-            if (!_context.Users.Any())
-            {
-                var user = new User
-                {
-                    Email = "admin@admin.ru",
-                    Password = "admin",
-                    Role = "admin",
-                    Basket = new Basket()
-                };
-
-                _context.Users.Add(user);
-
-                _context.SaveChanges();
-            }
         }
 
         public ViewResult Index()
