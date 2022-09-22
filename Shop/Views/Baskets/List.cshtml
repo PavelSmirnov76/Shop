@@ -9,10 +9,14 @@
     {
         foreach (Product product in Model.Products)
         {
-            @Html.Partial("AllProduct", product);
+            <div>
+                @Html.Partial("AllProduct", product);
+
+                <p><a class="btn btn-sm btn-outline-secondary" asp-controller="BasketProducts" asp-action="DeleteToBasket" asp-route-productId="@product.Id">Убрать</a></p>
+            </div>
                 
         }
     }
 }
-    <p><a class="btn btn-warning" asp-controller="Order" asp-action="Index"> Оплатить</a></p>
-}
+
+<p><a class="btn btn-warning" asp-controller="Order" asp-action="Index"> Оплатить</a></p>

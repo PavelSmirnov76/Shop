@@ -4,7 +4,7 @@
     foreach (Product product in Model)
     {
         <div>
-           @Html.Partial("AllProduct", product)
+            @Html.Partial("AllProduct", product)
 
             <p><a class="btn btn-warning" asp-controller="BasketProducts" asp-action="AddToBasket" asp-route-productId="@product.Id"> Добавить в корзину</a></p>
         </div>

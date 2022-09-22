@@ -33,12 +33,34 @@ namespace Shop.Controllers
             _context.BasketProducts.Add(new BasketProduct
             {
                 ProductId = productId,
-                BasketId = basketId
+                BasketId = basketId                     
             });
 
             _context.SaveChanges();
 
             return View();
+        }
+
+        public async Task<ActionResult> DeleteToBasket(long productId)
+                                             {
+            var basketId = _context.Users.Include(b => b.Basket)
+                    .Where(u => u.Email == HttpContext.User.Identity.Name)
+                    .FirstOrDefault().Basket.Id;
+
+            var test = _context.BasketProducts.ToList();
+
+            var product = await _context.BasketProducts.FirstOrDefaultAsync(p => p.ProductId == productId && p.BasketId == basketId);
+
+            if (product != null)
+            {
+                _context.BasketProducts.Remove(product);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToActionPermanent("List", "Baskets");
+            }
+
+            return NotFound();
         }
     }
 }

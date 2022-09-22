@@ -1,0 +1,17 @@
+﻿@using Shop.Models;
+
+@{
+    <p><a class="btn btn-warning" asp-controller="Products" asp-action="AddProduct">Добавить продукт</a></p>
+
+    foreach (Product product in Model)
+    {
+        <div>
+            @Html.Partial("AllProduct", product)
+
+            <div class="btn-group">
+                <p><a class="btn btn-sm btn-outline-secondary" asp-controller="Products" asp-action="DeleteProduct" asp-route-productId="@product.Id">Удалить</a></p>
+                <p><a class="btn btn-sm btn-outline-secondary" asp-controller="Products" asp-action="UpdateProduct" asp-route-productId="@product.Id">Изменить</a></p>
+            </div>
+        </div>
+    }
+}

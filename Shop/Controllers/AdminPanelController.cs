@@ -1,15 +1,18 @@
 ﻿using GameStore.Database;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Models;
 
 namespace Shop.Controllers
 {
-    public class HomeController : Controller
+    [Authorize(Roles = "admin")]
+    public class AdminPanelController : Controller
     {
         private readonly GameStoreContext _context;
 
-        public HomeController(GameStoreContext context)
+        public AdminPanelController(GameStoreContext context)
         {
             _context = context;
 
@@ -24,19 +27,14 @@ namespace Shop.Controllers
                 };
 
                 _context.Users.Add(user);
-
-                _context.SaveChanges();
             }
         }
 
-        public ViewResult Index()
+        public ViewResult List()
         {
-            ViewBag.Title = "Начальная страница";
-
-            var users = _context.Users.ToList();
-            var bask = _context.Baskets.ToList();
+            ViewBag.Title = "Админ панель";
 
             return View(_context.Products.Include(p => p.ProductInfos));
-        }
+        }       
     }
 }

@@ -22,22 +22,61 @@ namespace Shop.Controllers
         {
             ViewBag.Title = "Страница с играми";
 
-            var test2 = HttpContext.User.Identity.Name;
-            var test23 = CookieAuthenticationDefaults.AuthenticationScheme;
             return View(_context.Products.Include(p=> p.ProductInfos));
         }
 
         [Authorize(Roles = "admin")]
-        public ViewResult AddProduct(Product model)
+        public async Task<ActionResult> AddProduct(Product model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Name != null)
             {
-                _context.Products.Add(model);
+                await _context.Products.AddAsync(model);
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+
+                return RedirectToActionPermanent("List", "AdminPanel");
             }
+
             return View(model);
         }
 
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> DeleteProduct(long productId)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == productId);
+
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToActionPermanent("List", "AdminPanel");
+            }
+
+            return NotFound();
+        }
+
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> UpdateProduct(long productId)
+        {
+
+            var product = await _context.Products.FirstOrDefaultAsync(p => productId == p.Id);
+
+            if (product != null)
+                return View(product);
+
+            return NotFound();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateProduct(Product product)
+        {
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+
+            return RedirectToActionPermanent("List", "AdminPanel");
+        }
     }
 }

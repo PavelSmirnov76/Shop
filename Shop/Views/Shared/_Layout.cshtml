@@ -6,6 +6,8 @@
     <title>@ViewBag.Title</title>
     <link href ="~/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="~/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="~/js/bootstrap.min.js">
+    </script>
 </head>
 <body>
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -20,19 +22,31 @@
         </ul>
 
         <div class="col-md-3 text-end">
-            <a asp-controller="Products" asp-action="AddProduct" type="button" class="btn btn-primary">Добавить игру</a>
+            @{
+                if (User.IsInRole("admin"))
+                {
+                    <a asp-controller="AdminPanel" asp-action="List" type="button" class="btn btn-primary">Админ панель</a>
+                }
+            }
             <a asp-controller="Account" asp-action="Login" type="button" class="btn btn-primary">Войти</a>
             <a asp-controller="Account" asp-action="Logout" type="button" class="btn btn-primary">Выйти</a>
+            
         </div>
     </header>
     <div>
-        @RenderBody()
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    @RenderBody()               
+                </div>
+            </div>
+        </div>
     </div>
     <footer class="container">
         <p class="float-end"><a asp-controller="Home" asp-action="Index">На главную</a></p>
         <p>Like A Game</>
       </footer>
-    <script src="~/js/bootstrap.min.js" >
-    </script>
+   
 </body>
 </html> 
